@@ -1,0 +1,31 @@
+{
+  "name": "structure-sdk",
+  "version": "0.0.0",
+  "description": "SDK for Structure",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "gulp t"
+  },
+  "author": "Chris Abrams <mail@chrisabrams.com>",
+  "license": "MIT",
+  "dependencies": {
+    "babel-core": "^6.4.5",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "superagent": "^1.7.1"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "gulp": "^3.9.0",
+    "gulp-clean": "^0.3.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-eslint": "^1.1.1",
+    "gulp-mocha": "^2.2.0",
+    "gulp-size": "^2.0.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "mocha": "^2.3.4",
+    "sinon": "^1.17.2",
+    "sinon-chai": "^2.8.0",
+    "structure-test-helpers": "*"
+  }
+}
