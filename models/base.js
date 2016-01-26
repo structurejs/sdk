@@ -2,9 +2,16 @@ import request from 'superagent'
 
 class BaseModel {
 
-  constructor() {
-    this.create = this.put
-    this.update = this.post
+  constructor(options = {}) {
+    this.create   = this.put
+    this.model    = options.model
+    this.stripPkg = true
+    this.update   = this.post
+    this.url = {
+      base: '/api/v0.1',
+      host: 'http://localhost:8400',
+      slug: 'base'
+    }
   }
 
   delete(id, pkg = {}, cb) {
@@ -30,29 +37,29 @@ class BaseModel {
   request(type, url = '', pkg = {}, cb) {
 
     url = `${this.url.host}${this.url.base}/${this.url.slug}${url}`
-    //console.error('Request URL', url)
+
     request[type](url)
       .send(pkg)
       .set('Accept', 'application/json')
       .end( (err, res) => {
 
-        if(err || !res.body || !res.body.pkg) {
+        if(err || !res.body) {
+          console.error('Request URL', url)
           console.error('Request Error', err)
           return cb(err)
         }
 
-        return cb(null, res.body.pkg, res.body.status)
+        var resp = this.stripPkg ? res.body.pkg : res.body
+
+        // TODO: this should be middleware
+        if(this.model) this.model.attr = res.body.pkg
+
+        return cb(null, resp, res.body.status)
 
       })
 
   }
 
-}
-
-BaseModel.prototype.url = {
-  base: '/api/v0.1',
-  host: 'http://localhost:8400',
-  slug: 'base'
 }
 
 export default BaseModel

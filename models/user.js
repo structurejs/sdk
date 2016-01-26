@@ -4,10 +4,10 @@ class UserModel extends Model {
 
   constructor() {
     super()
+
+    this.url.slug = 'users'
   }
 
 }
-
-UserModel.prototype.url.slug = 'users'
 
 export default UserModel
