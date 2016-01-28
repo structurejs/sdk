@@ -11,7 +11,6 @@ describe('Integration: Model: User', function() {
     user.create(pkg, function(err, res) {
       console.error('ID', res.id)
       expect(res.firstName).to.be.a('string')
-      expect(res.status).to.equal('active')
 
       done()
 
@@ -52,7 +51,7 @@ describe('Integration: Model: User', function() {
 
         expect(res2).to.be.an('array')
         expect(res2.length).to.equal(1)
-        expect(res2[0].status).to.equal('active')
+        expect(res2[0].firstName).to.be.a('string')
 
         done()
 
