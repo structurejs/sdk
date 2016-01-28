@@ -52,7 +52,7 @@ class BaseModel {
         var resp = this.stripPkg ? res.body.pkg : res.body
 
         // TODO: this should be middleware
-        if(this.model) this.model.attr = res.body.pkg
+        if(this.model) this.model.set(res.body.pkg)
 
         return cb(null, resp, res.body.status)
 

@@ -2,8 +2,8 @@ import Model from './base'
 
 class AuthModel extends Model {
 
-  constructor() {
-    super()
+  constructor(options = {}) {
+    super(options)
 
     this.url.slug = 'auth'
   }
