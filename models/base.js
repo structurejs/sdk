@@ -24,6 +24,31 @@ class BaseModel {
     this.request('get', url, {}, cb)
   }
 
+  list(options = {}, cb) {
+    var limit = null
+    options   = options || {}
+
+    if(arguments.length == 1) {
+      limit   = null
+
+      if(typeof arguments[0] == 'function') {
+        options = {}
+        cb      = arguments[0]
+      }
+
+    }
+
+    if(options.limit) {
+      limit = `/${limit}`
+      delete options.limit
+    } else {
+      limit = ''
+    }
+
+    let url = `/list${limit}`
+    this.request('get', url, options, cb)
+  }
+
   post(id, pkg = {}, cb) {
     let url = `/${id}`
     this.request('post', url, pkg, cb)
@@ -36,10 +61,15 @@ class BaseModel {
 
   request(type, url = '', pkg = {}, cb) {
 
+    var data = 'send'
     url = `${this.url.host}${this.url.base}/${this.url.slug}${url}`
 
+    if(type == 'get') {
+      data = 'query'
+    }
+
     request[type](url)
-      .send(pkg)
+      [data](pkg)
       .set('Accept', 'application/json')
       .end( (err, res) => {
 
@@ -52,9 +82,11 @@ class BaseModel {
         var resp = this.stripPkg ? res.body.pkg : res.body
 
         // TODO: this should be middleware
-        if(this.model) this.model.set(res.body.pkg)
+        if(this.model && this.model.push) {
+          this.model.push(res.body.pkg)
+        }
 
-        return cb(null, resp, res.body.status)
+        if(typeof cb == 'function') return cb(null, resp, res.body.status)
 
       })
 
