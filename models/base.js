@@ -19,9 +19,14 @@ class BaseModel {
     this.request('del', url, pkg, cb)
   }
 
-  get(id, cb) {
+  get(id, pkg = {}, cb) {
+    if(arguments.length == 2) {
+      id = arguments[0]
+      cb = arguments[1]
+    }
+
     let url = `/${id}`
-    this.request('get', url, {}, cb)
+    this.request('get', url, pkg, cb)
   }
 
   list(options = {}, cb) {
