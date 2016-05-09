@@ -1,5 +1,6 @@
 require('babel-core/register')({
   ignore: /node_modules\/(?!structure*)/
 })
+require('babel-polyfill')
 
-global.expect = require('chai').expect
+process.env.NODE_ENV = 'test'
